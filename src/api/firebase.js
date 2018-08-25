@@ -4,12 +4,12 @@ import 'firebase/firestore';
 import { SLUGS, USERS, POSTS } from '../js/data';
 
 const config = {
-    apiKey: 'AIzaSyCuh2sVwKQcaLSTyW9EKXplIdW6b22ZPk4',
-    authDomain: 'spectre-cc13b.firebaseapp.com',
-    databaseURL: 'https://spectre-cc13b.firebaseio.com',
-    projectId: 'spectre-cc13b',
-    storageBucket: 'spectre-cc13b.appspot.com',
-    messagingSenderId: '783992202847',
+    apiKey: 'AIzaSyA17iumwKDJZPuzGOzK_giK2RD1rb5nhGE',
+    authDomain: 'revenant-cb783.firebaseapp.com',
+    databaseURL: 'https://revenant-cb783.firebaseio.com',
+    projectId: 'revenant-cb783',
+    storageBucket: 'revenant-cb783.appspot.com',
+    messagingSenderId: '64271569483',
 };
 firebase.initializeApp(config);
 
