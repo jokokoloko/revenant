@@ -1,6 +1,6 @@
-# Spectre
+# Revenant
 
-React ES6 Starter Application
+React ES6 Starter Application for Lead Generation
 
 ## Stack
 
