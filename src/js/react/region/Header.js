@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as client from '../../client';
 import * as path from '../../path';
@@ -27,40 +27,6 @@ const Header = ({ location, authenticated, profile, onLogOut }) => {
                 </button>
 
                 <nav className="navbar-collapse collapse">
-                    {!_Private && (
-                        <ul className="navbar-nav">
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to={path.About}>
-                                    About
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to={path.User}>
-                                    Users
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to={path.Post}>
-                                    Posts
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to={path.Register}>
-                                    Register
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to={path.Login}>
-                                    Login
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to={path._Private}>
-                                    Dashboard
-                                </NavLink>
-                            </li>
-                        </ul>
-                    )}
                     <Account location={location} authenticated={authenticated} profile={profile} onLogOut={onLogOut} />
                 </nav>
             </div>
