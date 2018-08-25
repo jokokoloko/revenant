@@ -5,6 +5,8 @@
 $dashboard-void-sm: 0;
 $dashboard-void-md: 0;
 $dashboard-void-lg: 210px;
+$dashboard-buffer-main: 30px;
+$dashboard-buffer-toolbar: 15px;
 
 /* ----------!VOID---------- */
 @include media-breakpoint-up(sm) {
@@ -56,17 +58,17 @@ $dashboard-void-lg: 210px;
     background-color: $color-phantom;
     }
 
-/* ========================== */
-/* ==========!SPACE========== */
-/* ========================== */
+/* =========================== */
+/* ==========!BUFFER========== */
+/* =========================== */
 
-/* ----------!GUTTER---------- */
+/* ----------!CONTAINER---------- */
 @include media-breakpoint-up(lg) {
     .dashboard .block .container-fluid,
     .dashboard #header .container-fluid,
     .dashboard #footer .container-fluid {
-        padding-left: 50px;
-        padding-right: 50px;
+        padding-left: $dashboard-buffer-main;
+        padding-right: $dashboard-buffer-main;
         }
 	}
 
@@ -95,7 +97,7 @@ $dashboard-void-lg: 210px;
 	@extend .p-xs-15;
 	background-color: $color-transparent;
 	margin: 0;
-    padding: 10px 20px;
+    padding: 10px $dashboard-buffer-toolbar;
     font-weight: $font-weight-2;
     line-height: $line-height-text;
     color: $color-white;
