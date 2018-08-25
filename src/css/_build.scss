@@ -336,7 +336,6 @@
 /* ----------!HEADER---------- */
 #header {
 	@include color($color-header);
-	border-bottom: 1px solid;
 	}
 #header .logo {
     width: 30px;
