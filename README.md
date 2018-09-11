@@ -26,7 +26,7 @@ Comparisons with other platforms:
 ## Prerequisites
 
 -   Install [node.js](http://nodejs.org/)
--   Clone the repository: https://github.com/jokokoloko/spectre.git
+-   Clone the repository: https://github.com/jokokoloko/revenant.git
 
 ## Installation
 
