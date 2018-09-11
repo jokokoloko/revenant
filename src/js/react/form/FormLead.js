@@ -69,6 +69,27 @@ class FormLead extends Component {
         return (
             <form id="form-lead" className={`form form-${size} mx-lg-auto`} onSubmit={this.onSubmit}>
                 <InputText
+                    name="first"
+                    label="First Name"
+                    placeholder="First Name"
+                    size={size}
+                    onChange={this.onChange}
+                    value={form.name && form.name.first}
+                    error={error.first}
+                    group="name"
+                    reference={this.isFocus}
+                />
+                <InputText
+                    name="last"
+                    label="Last Name"
+                    placeholder="Last Name"
+                    size={size}
+                    onChange={this.onChange}
+                    value={form.name && form.name.last}
+                    error={error.last}
+                    group="name"
+                />
+                <InputText
                     type="email"
                     name="email"
                     label="Email"
@@ -77,7 +98,25 @@ class FormLead extends Component {
                     onChange={this.onChange}
                     value={form.email}
                     error={error.email}
-                    reference={this.isFocus}
+                />
+                <InputText
+                    name="phone"
+                    label="Phone"
+                    placeholder="Phone"
+                    size={size}
+                    onChange={this.onChange}
+                    value={form.phone}
+                    error={error.phone}
+                />
+                <InputText
+                    name="state"
+                    label="State"
+                    placeholder="State"
+                    size={size}
+                    onChange={this.onChange}
+                    value={form.address && form.address.state}
+                    error={error.state}
+                    group="address"
                 />
                 <div className="form-group">
                     <InputButton
