@@ -2,8 +2,8 @@ import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import * as actionAccount from '../../redux/action/actionAccount';
-import { ACCOUNT_REGISTER_REQUEST } from '../../redux/type';
+import * as actionLead from '../../redux/action/actionLead';
+import { LEAD_SAVE_REQUEST } from '../../redux/type';
 import { findByString, removeStatus } from '../../filter';
 import InputButton from '../input/InputButton';
 import InputText from '../input/InputText';
@@ -44,10 +44,10 @@ class FormLead extends Component {
         });
     }
     onSubmit(event) {
-        const { actionAccount } = this.props;
+        const { actionLead } = this.props;
         const { form } = this.state;
         event.preventDefault();
-        this.isValid() && actionAccount.accountRegister(form);
+        this.isValid() && actionLead.leadSave(form);
     }
     isValid() {
         const { form } = this.state;
@@ -136,18 +136,18 @@ class FormLead extends Component {
 
 FormLead.propTypes = {
     submitting: PropTypes.bool.isRequired,
-    actionAccount: PropTypes.objectOf(PropTypes.func).isRequired,
+    actionLead: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
 function mapStateToProps({ calls }) {
     return {
-        submitting: findByString(calls, removeStatus(ACCOUNT_REGISTER_REQUEST)),
+        submitting: findByString(calls, removeStatus(LEAD_SAVE_REQUEST)),
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actionAccount: bindActionCreators(actionAccount, dispatch),
+        actionLead: bindActionCreators(actionLead, dispatch),
     };
 }
 
