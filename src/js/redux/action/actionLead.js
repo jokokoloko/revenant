@@ -1,5 +1,6 @@
 import toastr from 'toastr';
 import apiLead from '../../../api/apiLead';
+import { leads } from '../../../api/firebase';
 import {
     LEAD_SAVE_REQUEST,
     LEAD_SAVE_SUCCESS,
@@ -17,9 +18,8 @@ export const leadSaveRequest = () => ({
     type: LEAD_SAVE_REQUEST,
 });
 
-export const leadSaveSuccess = (form) => ({
+export const leadSaveSuccess = () => ({
     type: LEAD_SAVE_SUCCESS,
-    form,
 });
 
 export const leadSaveFailure = (error) => ({
@@ -33,7 +33,7 @@ export const leadSave = (form) => (dispatch) => {
         .leadAdd(form) // issue: check to see if this can return lead in callback function in case writing to firestore fails
         .then(() => {
             dispatch(leadSaveSuccess(form)); // issue: pass in lead from firestore api call
-            toastr.success('Lead updated!');
+            toastr.success('Lead added!');
         })
         .catch((error) => {
             dispatch(leadSaveFailure(error));
@@ -43,36 +43,45 @@ export const leadSave = (form) => (dispatch) => {
 };
 
 // Load
-export const leadLoadRequest = () => ({
+export const leadsLoadRequest = () => ({
     type: LEADS_LOAD_REQUEST,
 });
 
-export const leadLoadSuccess = (lead) => ({
+export const leadsLoadSuccess = (lead) => ({
     type: LEADS_LOAD_SUCCESS,
     lead,
 });
 
-export const leadLoadFailure = (error) => ({
+export const leadsLoadFailure = (error) => ({
     type: LEADS_LOAD_FAILURE,
     error,
 });
 
-export const leadLoad = () => (dispatch) => {
-    dispatch(leadLoadRequest());
-    return apiLead
-        .leadLoad()
-        .then((lead) => {
-            dispatch(leadLoadSuccess(lead));
-            toastr.success(`Welcome ${(lead.name && lead.name.first) || lead.email}!`);
-        })
-        .catch((error) => {
-            dispatch(leadLoadFailure(error));
-            toastr.error(error.message);
-            throw error;
-        });
+export const leadsLoad = (watch) => (dispatch) => {
+    dispatch(leadsLoadRequest());
+    return watch
+        ? leads.orderBy('time.created', 'desc').onSnapshot(
+              (snapshot) => {
+                  const leads = snapshot.docs.map((lead) => lead.data());
+                  dispatch(leadsLoadSuccess(leads));
+              },
+              (error) => {
+                  dispatch(leadsLoadFailure(error));
+                  toastr.error(error.message);
+                  throw error;
+              },
+          )
+        : apiLead
+              .leadsLoad()
+              .then((leads) => dispatch(leadsLoadSuccess(leads)))
+              .catch((error) => {
+                  dispatch(leadsLoadFailure(error));
+                  toastr.error(error.message);
+                  throw error;
+              });
 };
 
 // Void
-export const leadVoid = () => ({
+export const leadsVoid = () => ({
     type: LEADS_VOID,
 });
