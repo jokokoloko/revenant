@@ -43,18 +43,18 @@ p {
 	}
 
 /* ----------!LIST---------- */
-ol,
-ul {
+ol#{$not-list},
+ul#{$not-list} {
 	padding-left: 20px;
 	}
 @include media-breakpoint-up(md) {
-	ol,
-	ul {
+	ol#{$not-list},
+	ul#{$not-list} {
 		padding-left: 50px;
 		}
 	}
-ol:not([class*="row"]):not([class*="nav"]):not([class*="navbar-nav"]):not([class*="dropdown-menu"]):not([class*="pager"]):not([class*="carousel-indicators"]) > li,
-ul:not([class*="row"]):not([class*="nav"]):not([class*="navbar-nav"]):not([class*="dropdown-menu"]):not([class*="pager"]):not([class*="carousel-indicators"]) > li {
+ol#{$not-list} > li,
+ul#{$not-list} > li {
 	@extend [class*="xs-15"];
 	@extend .p-xs-15;
 	}

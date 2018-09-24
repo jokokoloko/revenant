@@ -1,10 +1,14 @@
+/* ======================== */
+/* ==========!NOT========== */
+/* ======================== */
+$not-list: ':not([class*="list-reset"]):not([class*="row"]):not([class*="nav"]):not([class*="navbar-nav"]):not([class*="dropdown-menu"]):not([class*="pager"]):not([class*="carousel-indicators"])';
+
 /* ========================= */
 /* ==========!HELP========== */
 /* ========================= */
 
 /* ----------!LIST---------- */
-.ul-zero {
-	margin-bottom: 0 !important;
+.list-reset {
     padding-left: 0 !important;
     list-style: none !important;
 	}

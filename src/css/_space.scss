@@ -67,8 +67,8 @@ h6 + p {
 	}
 
 /* ----------!LIST---------- */
-ol:not([class*="row"]):not([class*="nav"]):not([class*="navbar-nav"]):not([class*="dropdown-menu"]):not([class*="pager"]):not([class*="carousel-indicators"]) > li + li,
-ul:not([class*="row"]):not([class*="nav"]):not([class*="navbar-nav"]):not([class*="dropdown-menu"]):not([class*="pager"]):not([class*="carousel-indicators"]) > li + li {
+ol#{$not-list} > li + li,
+ul#{$not-list} > li + li {
 	padding-top: 23px; // 30px spacing
 	}
 ol + p,
