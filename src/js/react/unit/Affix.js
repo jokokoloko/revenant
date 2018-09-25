@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 class Affix extends Component {
@@ -34,9 +34,12 @@ class Affix extends Component {
         const { className, children, ...props } = this.props;
         const { affix } = this.state;
         return (
-            <div className={`${className} affix ${affix ? 'position-fixed' : 'position-initial'}`} {...props}>
-                {children}
-            </div>
+            <Fragment>
+                <div className={`${className} affix affix-width ${affix ? 'position-fixed' : 'position-initial'}`} {...props}>
+                    {children}
+                </div>
+                {affix && <div className="affix-width" />}
+            </Fragment>
         );
     }
 }
