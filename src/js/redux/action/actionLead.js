@@ -2,6 +2,8 @@ import toastr from 'toastr';
 import apiLead from '../../../api/apiLead';
 import { leads } from '../../../api/firebase';
 import {
+    LEAD_ADD,
+    LEAD_EDIT,
     LEAD_SAVE_REQUEST,
     LEAD_SAVE_SUCCESS,
     LEAD_SAVE_FAILURE,
@@ -14,6 +16,14 @@ import {
 toastr.options.positionClass = 'toast-top-center';
 
 // Save
+export const leadAdd = () => ({
+    type: LEAD_ADD,
+});
+
+export const leadEdit = () => ({
+    type: LEAD_EDIT,
+});
+
 export const leadSaveRequest = () => ({
     type: LEAD_SAVE_REQUEST,
 });
@@ -29,17 +39,31 @@ export const leadSaveFailure = (error) => ({
 
 export const leadSave = (form) => (dispatch) => {
     dispatch(leadSaveRequest());
-    return apiLead
-        .leadAdd(form) // issue: check to see if this can return lead in callback function in case writing to firestore fails
-        .then(() => {
-            dispatch(leadSaveSuccess(form)); // issue: pass in lead from firestore api call
-            toastr.success('Lead added!');
-        })
-        .catch((error) => {
-            dispatch(leadSaveFailure(error));
-            toastr.error(error.message);
-            throw error;
-        });
+    return form.id
+        ? apiLead
+              .leadEdit(form)
+              .then(() => {
+                  dispatch(leadEdit());
+                  dispatch(leadSaveSuccess());
+                  toastr.success('Lead updated!');
+              })
+              .catch((error) => {
+                  dispatch(leadSaveFailure(error));
+                  toastr.error(error.message);
+                  throw error;
+              })
+        : apiLead
+              .leadAdd(form)
+              .then(() => {
+                  dispatch(leadAdd());
+                  dispatch(leadSaveSuccess());
+                  toastr.success('Lead added!');
+              })
+              .catch((error) => {
+                  dispatch(leadSaveFailure(error));
+                  toastr.error(error.message);
+                  throw error;
+              });
 };
 
 // Load
@@ -47,9 +71,9 @@ export const leadsLoadRequest = () => ({
     type: LEADS_LOAD_REQUEST,
 });
 
-export const leadsLoadSuccess = (lead) => ({
+export const leadsLoadSuccess = (leads) => ({
     type: LEADS_LOAD_SUCCESS,
-    lead,
+    leads,
 });
 
 export const leadsLoadFailure = (error) => ({
