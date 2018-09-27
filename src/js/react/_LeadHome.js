@@ -3,35 +3,35 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import * as actionUser from '../redux/action/actionUser';
-import { USERS_LOAD_REQUEST } from '../redux/type';
+import * as actionLead from '../redux/action/actionLead';
+import { LEADS_LOAD_REQUEST } from '../redux/type';
 import { findByString, removeStatus } from '../filter';
 import Basic from './section/Basic';
 import Loader from './unit/Loader';
 
 class _LeadHome extends Component {
     componentDidMount() {
-        const { actionUser } = this.props;
-        actionUser.usersLoad();
+        const { actionLead } = this.props;
+        actionLead.leadsLoad();
     }
     render() {
-        const { loadingUsers, users } = this.props;
-        const item = 'user';
+        const { loadingLeads, leads } = this.props;
+        const item = 'lead';
         const empty = '-';
-        const labelUser = ['Email', 'First', 'Last', 'Phone', 'State', 'Action'];
-        const loopUser = users.map((user, index) => {
-            const count = users.length - index;
+        const labelLead = ['Email', 'First', 'Last', 'Phone', 'State', 'Action'];
+        const loopLead = leads.map((lead, index) => {
+            const count = leads.length - index;
             return (
-                <tr key={user.id} id={user.id} className={`${item} ${item}-${count}`}>
+                <tr key={lead.id} id={lead.id} className={`${item} ${item}-${count}`}>
                     <th className={`${item}-email`} scope="row">
-                        {user.email || empty}
+                        {lead.email || empty}
                     </th>
-                    <td className={`${item}-name ${item}-name-first`}>{(user.name && user.name.first) || empty}</td>
-                    <td className={`${item}-name ${item}-name-last`}>{(user.name && user.name.last) || empty}</td>
-                    <td className={`${item}-phone`}>{user.phone || empty}</td>
-                    <td className={`${item}-address ${item}-address-state`}>{(user.address && user.address.state) || empty}</td>
+                    <td className={`${item}-name ${item}-name-first`}>{(lead.name && lead.name.first) || empty}</td>
+                    <td className={`${item}-name ${item}-name-last`}>{(lead.name && lead.name.last) || empty}</td>
+                    <td className={`${item}-phone`}>{lead.phone || empty}</td>
+                    <td className={`${item}-address ${item}-address-state`}>{(lead.address && lead.address.state) || empty}</td>
                     <td className={`${item}-action`}>
-                        <Link to={`/${user.slug}`}>View</Link>
+                        <Link to={`/${lead.slug}`}>View</Link>
                     </td>
                 </tr>
             );
@@ -42,18 +42,18 @@ class _LeadHome extends Component {
                     <Basic container="container-fluid" space="space-xs-50 space-lg-80">
                         <header className="d-flex align-items-end node-xs-50">
                             <h1>Leads</h1>
-                            <p className="ml-auto">Total: {users.length}</p>
+                            <p className="ml-auto">Total: {leads.length}</p>
                         </header>
 
                         <section className="node-xs-50">
-                            {loadingUsers ? (
-                                <Loader position="exact-center fixed" label="Loading users" />
+                            {loadingLeads ? (
+                                <Loader position="exact-center fixed" label="Loading leads" />
                             ) : (
                                 <div className="table-container table-responsive-sm">
                                     <table className={`table table-striped table-bordered table-style table-size-80 table-${item}`}>
                                         <thead>
                                             <tr className="label-row">
-                                                {labelUser.map((name, index) => {
+                                                {labelLead.map((name, index) => {
                                                     const count = index + 1;
                                                     return (
                                                         <th key={`label-${count}`} className={`label label-${count}`} scope="col">
@@ -65,15 +65,14 @@ class _LeadHome extends Component {
                                         </thead>
 
                                         <tbody>
-                                            {users.length > 0 ? (
-                                                loopUser
+                                            {leads.length > 0 ? (
+                                                loopLead
                                             ) : (
                                                 <tr className={`${item} ${item}-empty`}>
                                                     <th className={`${item}-email`} scope="row">{`No ${item}s`}</th>
                                                     <td className={`${item}-name ${item}-name-first`}>{empty}</td>
                                                     <td className={`${item}-name ${item}-name-last`}>{empty}</td>
-                                                    <td className={`${item}-handle`}>{empty}</td>
-                                                    <td className={`${item}-address ${item}-address-city`}>{empty}</td>
+                                                    <td className={`${item}-phone`}>{empty}</td>
                                                     <td className={`${item}-address ${item}-address-state`}>{empty}</td>
                                                     <td className={`${item}-action`}>{empty}</td>
                                                 </tr>
@@ -91,21 +90,21 @@ class _LeadHome extends Component {
 }
 
 _LeadHome.propTypes = {
-    loadingUsers: PropTypes.bool.isRequired,
-    users: PropTypes.arrayOf(PropTypes.object).isRequired,
-    actionUser: PropTypes.objectOf(PropTypes.func).isRequired,
+    loadingLeads: PropTypes.bool.isRequired,
+    leads: PropTypes.arrayOf(PropTypes.object).isRequired,
+    actionLead: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
-function mapStateToProps({ calls, users }) {
+function mapStateToProps({ calls, leads }) {
     return {
-        loadingUsers: findByString(calls, removeStatus(USERS_LOAD_REQUEST)),
-        users,
+        loadingLeads: findByString(calls, removeStatus(LEADS_LOAD_REQUEST)),
+        leads,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actionUser: bindActionCreators(actionUser, dispatch),
+        actionLead: bindActionCreators(actionLead, dispatch),
     };
 }
 
