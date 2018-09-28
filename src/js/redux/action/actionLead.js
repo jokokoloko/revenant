@@ -1,6 +1,6 @@
 import toastr from 'toastr';
 import apiLead from '../../../api/apiLead';
-import { leads } from '../../../api/firebase';
+import { authentication, leads } from '../../../api/firebase';
 import {
     LEAD_ADD,
     LEAD_EDIT,
@@ -84,17 +84,18 @@ export const leadsLoadFailure = (error) => ({
 export const leadsLoad = (watch) => (dispatch) => {
     dispatch(leadsLoadRequest());
     return watch
-        ? leads.orderBy('time.created', 'desc').onSnapshot(
-              (snapshot) => {
-                  const leads = snapshot.docs.map((lead) => lead.data());
-                  dispatch(leadsLoadSuccess(leads));
-              },
-              (error) => {
-                  dispatch(leadsLoadFailure(error));
-                  toastr.error(error.message);
-                  throw error;
-              },
-          )
+        ? authentication.currentUser &&
+              leads.orderBy('time.created', 'desc').onSnapshot(
+                  (snapshot) => {
+                      const leads = snapshot.docs.map((lead) => lead.data());
+                      dispatch(leadsLoadSuccess(leads));
+                  },
+                  (error) => {
+                      dispatch(leadsLoadFailure(error));
+                      toastr.error(error.message);
+                      throw error;
+                  },
+              )
         : apiLead
               .leadsLoad()
               .then((leads) => dispatch(leadsLoadSuccess(leads)))

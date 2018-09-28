@@ -1,8 +1,9 @@
-import { users } from './firebase';
+import { authentication, users } from './firebase';
 
 class apiUser {
     // Load
     static usersLoad = () =>
+        authentication.currentUser &&
         users
             .orderBy('time.created', 'desc')
             .get()

@@ -1,6 +1,6 @@
 import toastr from 'toastr';
 import apiUser from '../../../api/apiUser';
-import { users } from '../../../api/firebase';
+import { authentication, users } from '../../../api/firebase';
 import { USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE, USERS_VOID } from '../type';
 
 toastr.options.positionClass = 'toast-top-center';
@@ -23,17 +23,18 @@ export const usersLoadFailure = (error) => ({
 export const usersLoad = (watch) => (dispatch) => {
     dispatch(usersLoadRequest());
     return watch
-        ? users.orderBy('time.created', 'desc').onSnapshot(
-              (snapshot) => {
-                  const users = snapshot.docs.map((user) => user.data());
-                  dispatch(usersLoadSuccess(users));
-              },
-              (error) => {
-                  dispatch(usersLoadFailure(error));
-                  toastr.error(error.message);
-                  throw error;
-              },
-          )
+        ? authentication.currentUser &&
+              users.orderBy('time.created', 'desc').onSnapshot(
+                  (snapshot) => {
+                      const users = snapshot.docs.map((user) => user.data());
+                      dispatch(usersLoadSuccess(users));
+                  },
+                  (error) => {
+                      dispatch(usersLoadFailure(error));
+                      toastr.error(error.message);
+                      throw error;
+                  },
+              )
         : apiUser
               .usersLoad()
               .then((users) => dispatch(usersLoadSuccess(users)))

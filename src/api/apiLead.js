@@ -17,7 +17,7 @@ class apiLead {
                 lead.update({
                     id: lead.id,
                 });
-                apiProfile.profileAuthor(LEADS, lead.id);
+                authentication.currentUser && apiProfile.profileAuthor(LEADS, lead.id);
                 apiSlug.slugAdd(lead.id, LEADS, lead.id);
                 console.log('Added lead:', lead.id); // remove
             })
