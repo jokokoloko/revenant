@@ -12,7 +12,7 @@ import Loader from './unit/Loader';
 class _LeadHome extends Component {
     componentDidMount() {
         const { actionLead } = this.props;
-        actionLead.leadsLoad();
+        actionLead.leadsLoad(true);
     }
     render() {
         const { loadingLeads, leads } = this.props;
