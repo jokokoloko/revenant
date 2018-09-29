@@ -37,6 +37,11 @@ const Toolbar = ({ match }) => (
                     Leads
                 </NavLink>
             </li>
+            <li className="nav-item">
+                <NavLink className="nav-link" to={`${match.path}${path._Campaign}`}>
+                    Campaigns
+                </NavLink>
+            </li>
         </ul>
     </aside>
 );
