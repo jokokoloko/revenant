@@ -1,5 +1,7 @@
 // Private
 export const _Campaign = '/campaign';
+export const _CampaignAdd = '/add';
+export const _CampaignEdit = '/:id';
 export const _Lead = '/lead';
 export const _Post = '/post';
 export const _PostAdd = '/add';
