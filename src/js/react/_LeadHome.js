@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -30,9 +29,7 @@ class _LeadHome extends Component {
                     <td className={`${item}-name ${item}-name-last`}>{(lead.name && lead.name.last) || empty}</td>
                     <td className={`${item}-phone`}>{lead.phone || empty}</td>
                     <td className={`${item}-address ${item}-address-state`}>{(lead.address && lead.address.state) || empty}</td>
-                    <td className={`${item}-action`}>
-                        <Link to={`/${lead.slug}`}>View</Link>
-                    </td>
+                    <td className={`${item}-action`}>Delete</td>
                 </tr>
             );
         });
