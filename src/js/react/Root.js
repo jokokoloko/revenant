@@ -12,6 +12,7 @@ import _Private from './_Private';
 import ResetPassword from './ResetPassword';
 import Login from './Login';
 import Register from './Register';
+import CampaignView from './CampaignView';
 import Home from './Home';
 import Empty from './404';
 import Header from './region/Header';
@@ -51,6 +52,7 @@ class Root extends Component {
                         <PublicRoute path={path.ResetPassword} component={ResetPassword} authenticated={authenticated} />
                         <PublicRoute path={path.Login} component={Login} authenticated={authenticated} />
                         <PublicRoute path={path.Register} component={Register} authenticated={authenticated} />
+                        <Route path={path.CampaignView} component={CampaignView} />
                         <Route path={path.Root} component={Home} exact />
                         <Route component={Empty} />
                     </Switch>

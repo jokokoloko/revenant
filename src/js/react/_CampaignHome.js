@@ -29,7 +29,7 @@ class _CampaignHome extends Component {
                     </th>
                     <td className={`${item}-user`}>{campaign.user || empty}</td>
                     <td className={`${item}-action`}>
-                        <Link to={`${path.Campaign}/${campaign.slug}`}>View</Link>
+                        <Link to={`/${campaign.id}`}>View</Link>
                         {profile.id === campaign.user && (
                             <Fragment>
                                 <span className="separator"> - </span>
