@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import * as actionLead from '../redux/action/actionLead';
 import { LEADS_LOAD_REQUEST } from '../redux/type';
 import { findByString, removeStatus } from '../filter';
+import * as logic from '../logic';
 import Basic from './section/Basic';
 import Loader from './unit/Loader';
 
@@ -17,18 +18,19 @@ class _LeadHome extends Component {
         const { loadingLeads, leads } = this.props;
         const item = 'lead';
         const empty = '-';
-        const labelLead = ['Email', 'First', 'Last', 'Phone', 'State', 'Action'];
+        const labelLead = ['Email', 'Name', 'Phone', 'State', 'Campaign', 'Action'];
         const loopLead = leads.map((lead, index) => {
             const count = leads.length - index;
+            const leadName = logic.userName(lead, empty);
             return (
                 <tr key={lead.id} id={lead.id} className={`${item} ${item}-${count}`}>
                     <th className={`${item}-email`} scope="row">
                         {lead.email || empty}
                     </th>
-                    <td className={`${item}-name ${item}-name-first`}>{(lead.name && lead.name.first) || empty}</td>
-                    <td className={`${item}-name ${item}-name-last`}>{(lead.name && lead.name.last) || empty}</td>
+                    <td className={`${item}-name ${item}-name-full`}>{leadName}</td>
                     <td className={`${item}-phone`}>{lead.phone || empty}</td>
                     <td className={`${item}-address ${item}-address-state`}>{(lead.address && lead.address.state) || empty}</td>
+                    <td className={`${item}-campaign`}>{lead.campaign || empty}</td>
                     <td className={`${item}-action`}>Delete</td>
                 </tr>
             );
@@ -67,10 +69,10 @@ class _LeadHome extends Component {
                                             ) : (
                                                 <tr className={`${item} ${item}-empty`}>
                                                     <th className={`${item}-email`} scope="row">{`No ${item}s`}</th>
-                                                    <td className={`${item}-name ${item}-name-first`}>{empty}</td>
-                                                    <td className={`${item}-name ${item}-name-last`}>{empty}</td>
+                                                    <td className={`${item}-name ${item}-name-full`}>{empty}</td>
                                                     <td className={`${item}-phone`}>{empty}</td>
                                                     <td className={`${item}-address ${item}-address-state`}>{empty}</td>
+                                                    <td className={`${item}-campaign`}>{empty}</td>
                                                     <td className={`${item}-action`}>{empty}</td>
                                                 </tr>
                                             )}
