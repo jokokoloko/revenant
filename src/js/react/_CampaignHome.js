@@ -19,7 +19,7 @@ class _CampaignHome extends Component {
         const { match, loadingCampaigns, profile, campaigns } = this.props;
         const item = 'campaign';
         const empty = '-';
-        const labelCampaign = ['Title', 'Author', 'Action'];
+        const labelCampaign = ['Title', 'Medium', 'Author', 'Action'];
         const loopCampaign = campaigns.map((campaign, index) => {
             const count = campaigns.length - index;
             return (
@@ -27,6 +27,7 @@ class _CampaignHome extends Component {
                     <th className={`${item}-title`} scope="row">
                         {campaign.title || empty}
                     </th>
+                    <td className={`${item}-medium`}>{campaign.medium || empty}</td>
                     <td className={`${item}-user`}>{campaign.user || empty}</td>
                     <td className={`${item}-action`}>
                         <Link to={`/${campaign.id}`}>View</Link>
@@ -77,6 +78,7 @@ class _CampaignHome extends Component {
                                             ) : (
                                                 <tr className={`${item} ${item}-empty`}>
                                                     <th className={`${item}-title`} scope="row">{`No ${item}s`}</th>
+                                                    <td className={`${item}-medium`}>{empty}</td>
                                                     <td className={`${item}-user`}>{empty}</td>
                                                     <td className={`${item}-action`}>{empty}</td>
                                                 </tr>

@@ -85,7 +85,7 @@ class FormCampaign extends Component {
             <form id="form-campaign" className={`form form-${size}`} onSubmit={this.onSubmit}>
                 <div className="row gutter-80">
                     <div className="col-lg">
-                        <div className="form-row node-xs-50">
+                        <div className="form-row form-gutter-20 node-xs-50">
                             <div className="form-column col">
                                 <InputText
                                     name="title"
@@ -95,6 +95,18 @@ class FormCampaign extends Component {
                                     onChange={this.onChange}
                                     value={form.title}
                                     error={error.title}
+                                    reference={this.isFocus}
+                                />
+                            </div>
+                            <div className="form-column col-lg-3">
+                                <InputText
+                                    name="medium"
+                                    label="Medium"
+                                    placeholder="Medium"
+                                    size={size}
+                                    onChange={this.onChange}
+                                    value={form.medium}
+                                    error={error.medium}
                                     reference={this.isFocus}
                                 />
                             </div>
