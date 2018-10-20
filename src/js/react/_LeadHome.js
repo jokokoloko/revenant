@@ -2,26 +2,30 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import * as actionCampaign from '../redux/action/actionCampaign';
 import * as actionLead from '../redux/action/actionLead';
-import { LEADS_LOAD_REQUEST } from '../redux/type';
+import { CAMPAIGNS_LOAD_REQUEST, LEADS_LOAD_REQUEST } from '../redux/type';
 import { findByString, removeStatus } from '../filter';
+import { arrayToObject } from '../function';
 import * as logic from '../logic';
 import Basic from './section/Basic';
 import Loader from './unit/Loader';
 
 class _LeadHome extends Component {
     componentDidMount() {
-        const { actionLead } = this.props;
+        const { actionCampaign, actionLead } = this.props;
+        actionCampaign.campaignsLoad(true);
         actionLead.leadsLoad(true);
     }
     render() {
-        const { loadingLeads, leads } = this.props;
+        const { loadingCampaigns, loadingLeads, leads, campaignsMap } = this.props;
         const item = 'lead';
         const empty = '-';
-        const labelLead = ['Email', 'Name', 'Phone', 'State', 'Campaign', 'Action'];
+        const labelLead = ['Email', 'Name', 'Phone', 'State', 'Campaign', 'Medium', 'Action'];
         const loopLead = leads.map((lead, index) => {
             const count = leads.length - index;
             const leadName = logic.userName(lead, empty);
+            const campaign = campaignsMap[lead.campaign] || {};
             return (
                 <tr key={lead.id} id={lead.id} className={`${item} ${item}-${count}`}>
                     <th className={`${item}-email`} scope="row">
@@ -30,7 +34,8 @@ class _LeadHome extends Component {
                     <td className={`${item}-name ${item}-name-full`}>{leadName}</td>
                     <td className={`${item}-phone`}>{lead.phone || empty}</td>
                     <td className={`${item}-address ${item}-address-state`}>{(lead.address && lead.address.state) || empty}</td>
-                    <td className={`${item}-campaign`}>{lead.campaign || empty}</td>
+                    <td className={`${item}-campaign`}>{campaign.title || empty}</td>
+                    <td className={`${item}-medium`}>{campaign.medium || empty}</td>
                     <td className={`${item}-action`}>Delete</td>
                 </tr>
             );
@@ -45,7 +50,7 @@ class _LeadHome extends Component {
                         </header>
 
                         <section className="node-xs-50">
-                            {loadingLeads ? (
+                            {loadingCampaigns || loadingLeads ? (
                                 <Loader position="exact-center fixed" label="Loading leads" />
                             ) : (
                                 <div className="table-container table-responsive-sm">
@@ -73,6 +78,7 @@ class _LeadHome extends Component {
                                                     <td className={`${item}-phone`}>{empty}</td>
                                                     <td className={`${item}-address ${item}-address-state`}>{empty}</td>
                                                     <td className={`${item}-campaign`}>{empty}</td>
+                                                    <td className={`${item}-medium`}>{empty}</td>
                                                     <td className={`${item}-action`}>{empty}</td>
                                                 </tr>
                                             )}
@@ -89,20 +95,26 @@ class _LeadHome extends Component {
 }
 
 _LeadHome.propTypes = {
+    loadingCampaigns: PropTypes.bool.isRequired,
     loadingLeads: PropTypes.bool.isRequired,
     leads: PropTypes.arrayOf(PropTypes.object).isRequired,
+    actionCampaign: PropTypes.objectOf(PropTypes.func).isRequired,
     actionLead: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
-function mapStateToProps({ calls, leads }) {
+function mapStateToProps({ calls, leads, campaigns }) {
+    const campaignsMap = arrayToObject(campaigns, 'id');
     return {
+        loadingCampaigns: findByString(calls, removeStatus(CAMPAIGNS_LOAD_REQUEST)),
         loadingLeads: findByString(calls, removeStatus(LEADS_LOAD_REQUEST)),
         leads,
+        campaignsMap,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
+        actionCampaign: bindActionCreators(actionCampaign, dispatch),
         actionLead: bindActionCreators(actionLead, dispatch),
     };
 }

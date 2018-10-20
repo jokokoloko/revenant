@@ -13,7 +13,7 @@ import Loader from './unit/Loader';
 class _CampaignHome extends Component {
     componentDidMount() {
         const { actionCampaign } = this.props;
-        actionCampaign.campaignsLoad();
+        actionCampaign.campaignsLoad(true);
     }
     render() {
         const { match, loadingCampaigns, profile, campaigns } = this.props;
