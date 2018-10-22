@@ -24,8 +24,8 @@ class _LeadHome extends Component {
         const labelLead = ['Email', 'Name', 'Phone', 'State', 'Campaign', 'Medium', 'Action'];
         const loopLead = leads.map((lead, index) => {
             const count = leads.length - index;
-            const leadName = logic.userName(lead, empty);
             const campaign = campaignsMap[lead.campaign] || {};
+            const leadName = logic.userName(lead, empty);
             return (
                 <tr key={lead.id} id={lead.id} className={`${item} ${item}-${count}`}>
                     <th className={`${item}-email`} scope="row">
