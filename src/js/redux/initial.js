@@ -8,5 +8,6 @@ export default {
     calls: [],
     users: [],
     posts: [],
+    campaigns: [],
     leads: [],
 };

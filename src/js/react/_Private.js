@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as path from '../path';
 import { PrivateRoute } from '../access';
+import _Campaign from './_Campaign';
 import _Lead from './_Lead';
 import _Post from './_Post';
 import _User from './_User';
@@ -18,6 +19,7 @@ const _Private = ({ match, authenticated }) => (
         <Switch>
             <PrivateRoute path={`${match.path}${path._Profile}`} component={_Profile} authenticated={authenticated} />
             <Route path={`${match.path}${path._Lead}`} component={_Lead} />
+            <Route path={`${match.path}${path._Campaign}`} component={_Campaign} />
             <Route path={`${match.path}${path._Post}`} component={_Post} />
             <Route path={`${match.path}${path._User}`} component={_User} />
             <Route path={`${match.path}`} component={_Home} exact />

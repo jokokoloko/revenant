@@ -33,6 +33,11 @@ const Toolbar = ({ match }) => (
                 </NavLink>
             </li>
             <li className="nav-item">
+                <NavLink className="nav-link" to={`${match.path}${path._Campaign}`}>
+                    Campaigns
+                </NavLink>
+            </li>
+            <li className="nav-item">
                 <NavLink className="nav-link" to={`${match.path}${path._Lead}`}>
                     Leads
                 </NavLink>

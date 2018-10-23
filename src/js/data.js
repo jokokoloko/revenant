@@ -2,6 +2,7 @@
 export const SLUGS = 'slugs';
 export const USERS = 'users';
 export const POSTS = 'posts';
+export const CAMPAIGNS = 'campaigns';
 export const LEADS = 'leads';
 
 // User - Status

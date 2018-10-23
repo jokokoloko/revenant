@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -44,8 +45,12 @@ class FormLead extends Component {
         });
     }
     onSubmit(event) {
-        const { actionLead } = this.props;
-        const { form } = this.state;
+        const { match, actionLead } = this.props;
+        const campaign = match.params.slug;
+        const form = {
+            ...this.state.form,
+            campaign,
+        };
         event.preventDefault();
         this.isValid() && actionLead.leadSave(form);
     }
@@ -151,7 +156,9 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(FormLead);
+export default withRouter(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps,
+    )(FormLead),
+);
