@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { CSVLink } from 'react-csv';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -18,6 +19,12 @@ class _LeadHome extends Component {
         actionLead.leadsLoad(true);
     }
     render() {
+        const csvData = [
+            ['firstname', 'lastname', 'email'],
+            ['Ahmed', 'Tomi', 'ah@smthing.co.com'],
+            ['Raed', 'Labes', 'rl@smthing.co.com'],
+            ['Yezzi', 'Min l3b', 'ymin@cocococo.com'],
+        ];
         const { loadingCampaigns, loadingLeads, leads, campaignsMap } = this.props;
         const item = 'lead';
         const empty = '-';
@@ -46,6 +53,9 @@ class _LeadHome extends Component {
                     <Basic container="container-fluid" space="space-xs-50 space-lg-80">
                         <header className="d-flex align-items-end node-xs-50">
                             <h1>Leads</h1>
+                            <CSVLink className="btn btn-default do-export" data={csvData}>
+                                Export
+                            </CSVLink>
                             <p className="ml-auto">Total: {leads.length}</p>
                         </header>
 
