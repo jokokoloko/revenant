@@ -19,12 +19,6 @@ class _LeadHome extends Component {
         actionLead.leadsLoad(true);
     }
     render() {
-        const csvData = [
-            ['firstname', 'lastname', 'email'],
-            ['Ahmed', 'Tomi', 'ah@smthing.co.com'],
-            ['Raed', 'Labes', 'rl@smthing.co.com'],
-            ['Yezzi', 'Min l3b', 'ymin@cocococo.com'],
-        ];
         const { loadingCampaigns, loadingLeads, leads, campaignsMap } = this.props;
         const item = 'lead';
         const empty = '-';
@@ -47,13 +41,36 @@ class _LeadHome extends Component {
                 </tr>
             );
         });
+        const data = [
+            { id: '2I6TErUETYTDq1x0nIjO' },
+            { id: 'UcoMUJOjU156M1dK8Djs' },
+            { id: 'AKRs9YH92b05PIMOV6O0' },
+            { id: 'kJVlMYQ1GLFl2ZeKoEos' },
+            { id: 'Eb617GcMR9CgZk6E3kx4' },
+            { id: 'N152sBsH5otLUUkwVpJX' },
+            { id: 'L2N8d2ZuM0Hn2ehON0LA' },
+            { id: 'dKs8VXtWddbe5MCjEWhI' },
+        ];
+
+        // const dataMap = data.map((lead, index) => {
+        //     return {
+        //         id: lead.id,
+        //     };
+        // });
+
+        const dataEach = [];
+        data.forEach((lead) => dataEach.push({ id: lead.id }));
+
+        // console.log('Data', data);
+        // console.log('Data', dataMap);
+        console.log('Data', dataEach);
         return (
             <main id="main" role="main">
                 <div className="container-fluid">
                     <Basic container="container-fluid" space="space-xs-50 space-lg-80">
                         <header className="d-flex align-items-end node-xs-50">
                             <h1>Leads</h1>
-                            <CSVLink className="btn btn-default do-export" data={csvData}>
+                            <CSVLink className="btn btn-default do-export" data={dataEach} filename={'leads.csv'}>
                                 Export
                             </CSVLink>
                             <p className="ml-auto">Total: {leads.length}</p>
