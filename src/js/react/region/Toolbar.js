@@ -23,16 +23,6 @@ const Toolbar = ({ match }) => (
         </ul>
         <ul className="toolbar-nav nav flex-column">
             <li className="nav-item">
-                <NavLink className="nav-link" to={`${match.path}${path._User}`}>
-                    Users
-                </NavLink>
-            </li>
-            <li className="nav-item">
-                <NavLink className="nav-link" to={`${match.path}${path._Post}`}>
-                    Posts
-                </NavLink>
-            </li>
-            <li className="nav-item">
                 <NavLink className="nav-link" to={`${match.path}${path._Campaign}`}>
                     Campaigns
                 </NavLink>
