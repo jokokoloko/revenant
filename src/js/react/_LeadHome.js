@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { CSVLink } from 'react-csv';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -21,10 +22,11 @@ class _LeadHome extends Component {
         const { loadingCampaigns, loadingLeads, leads, campaignsMap } = this.props;
         const item = 'lead';
         const empty = '-';
-        const labelLead = ['Email', 'Name', 'Phone', 'State', 'Campaign', 'Medium', 'Action'];
+        const labelLead = ['Email', 'Name', 'Phone', 'State', 'Campaign', 'Medium', 'Date', 'Action'];
         const loopLead = leads.map((lead, index) => {
             const count = leads.length - index;
             const campaign = campaignsMap[lead.campaign] || {};
+            const date = new Date(lead.time.created.seconds * 1000);
             const leadName = logic.userName(lead, empty);
             return (
                 <tr key={lead.id} id={lead.id} className={`${item} ${item}-${count}`}>
@@ -36,16 +38,43 @@ class _LeadHome extends Component {
                     <td className={`${item}-address ${item}-address-state`}>{(lead.address && lead.address.state) || empty}</td>
                     <td className={`${item}-campaign`}>{campaign.title || empty}</td>
                     <td className={`${item}-medium`}>{campaign.medium || empty}</td>
+                    <td className={`${item}-date`}>{date.toLocaleString() || empty}</td>
                     <td className={`${item}-action`}>Delete</td>
                 </tr>
             );
         });
+        const data = leads.map((lead, index) => {
+            const campaign = campaignsMap[lead.campaign] || {};
+            const date = new Date(lead.time.created.seconds * 1000);
+            return {
+                ...lead,
+                campaign: campaign.title,
+                medium: campaign.medium,
+                date,
+            };
+        });
+        const headers = [
+            { label: 'Email', key: 'email' },
+            { label: 'First', key: 'name.first' },
+            { label: 'Last', key: 'name.last' },
+            { label: 'Phone', key: 'phone' },
+            { label: 'State', key: 'address.state' },
+            { label: 'Campaign', key: 'campaign' },
+            { label: 'Medium', key: 'medium' },
+            { label: 'Date', key: 'date' },
+        ];
         return (
             <main id="main" role="main">
                 <div className="container-fluid">
                     <Basic container="container-fluid" space="space-xs-50 space-lg-80">
                         <header className="d-flex align-items-end node-xs-50">
                             <h1>Leads</h1>
+                            {leads &&
+                                leads.length > 0 && (
+                                    <CSVLink className="btn btn-default do-export" data={data} headers={headers} filename={'leads.csv'}>
+                                        Export
+                                    </CSVLink>
+                                )}
                             <p className="ml-auto">Total: {leads.length}</p>
                         </header>
 
@@ -54,7 +83,7 @@ class _LeadHome extends Component {
                                 <Loader position="exact-center fixed" label="Loading leads" />
                             ) : (
                                 <div className="table-container table-responsive-sm">
-                                    <table className={`table table-striped table-bordered table-style table-size-80 table-${item}`}>
+                                    <table className={`table table-striped table-bordered table-style table-${item}`}>
                                         <thead>
                                             <tr className="label-row">
                                                 {labelLead.map((name, index) => {
@@ -79,6 +108,7 @@ class _LeadHome extends Component {
                                                     <td className={`${item}-address ${item}-address-state`}>{empty}</td>
                                                     <td className={`${item}-campaign`}>{empty}</td>
                                                     <td className={`${item}-medium`}>{empty}</td>
+                                                    <td className={`${item}-date`}>{empty}</td>
                                                     <td className={`${item}-action`}>{empty}</td>
                                                 </tr>
                                             )}

@@ -54,6 +54,15 @@ export const slugify = (text) => {
 
 export const excerptify = (text, limit) => (text && (text.length > limit ? text.substr(0, text.lastIndexOf(' ', limit)) : text)) || null;
 
+// Object
+export const flattenObject = (object) => {
+    const result = {};
+    Object.keys(object).forEach(
+        (key) => (typeof object[key] === 'object' ? Object.assign(result, flattenObject(object[key])) : (result[key] = object[key])),
+    );
+    return result;
+};
+
 // Array
 export const arrayToObject = (array, key) =>
     Object.assign(

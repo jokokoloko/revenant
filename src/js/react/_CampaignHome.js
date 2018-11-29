@@ -64,7 +64,7 @@ class _CampaignHome extends Component {
                                 <Loader position="exact-center fixed" label="Loading campaigns" />
                             ) : (
                                 <div className="table-container table-responsive-sm">
-                                    <table className={`table table-striped table-bordered table-style table-size-80 table-${item}`}>
+                                    <table className={`table table-striped table-bordered table-style table-${item}`}>
                                         <thead>
                                             <tr className="label-row">
                                                 {labelCampaign.map((name, index) => {
