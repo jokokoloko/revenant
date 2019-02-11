@@ -26,7 +26,7 @@ const Account = ({ location, authenticated, profile, onLogOut }) => {
                 {profileName && <strong className="dropdown-header">{profileName}</strong>}
                 <p className="dropdown-text">{profile.email}</p>
                 <div className="dropdown-divider" />
-                <NavLink className="dropdown-item" to={`${path._Private}${path._Profile}`}>
+                <NavLink className="dropdown-item to-profile" to={`${path._Private}${path._Profile}`}>
                     Profile
                 </NavLink>
                 <div className="dropdown-divider" />
