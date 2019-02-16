@@ -18,7 +18,7 @@ class Dropdown extends Component {
                 {
                     toggle: false,
                 },
-                () => document.removeEventListener('click', this.onBlur),
+                document.removeEventListener('click', this.onBlur),
             );
     }
     componentWillUnmount() {
@@ -38,7 +38,7 @@ class Dropdown extends Component {
                 {
                     toggle: false,
                 },
-                () => document.removeEventListener('click', this.onBlur),
+                document.removeEventListener('click', this.onBlur),
             );
     }
     render() {
@@ -52,7 +52,8 @@ class Dropdown extends Component {
                     className={`nav-btn btn dropdown-toggle ${caret ? 'caret' : 'no-caret'}`}
                     aria-haspopup="true"
                     aria-expanded={toggle ? true : false}
-                    onClick={this.onClick}>
+                    onClick={this.onClick}
+                >
                     {label}
                 </button>
                 {toggle && (
